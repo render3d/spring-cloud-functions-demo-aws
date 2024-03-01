@@ -1,6 +1,6 @@
-# Welcome to your CDK Java project!
+# Java CDK Infrastructure Module
 
-This is a blank project for CDK development with Java.
+This is a project for CDK development with Java.
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
