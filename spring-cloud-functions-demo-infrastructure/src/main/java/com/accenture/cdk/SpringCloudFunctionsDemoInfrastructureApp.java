@@ -4,6 +4,10 @@ import software.amazon.awscdk.App;
 import software.amazon.awscdk.Environment;
 import software.amazon.awscdk.StackProps;
 
+/**
+ * @author vincent.renders@accenture.com
+ * @since 01/03/2024
+ */
 public class SpringCloudFunctionsDemoInfrastructureApp {
     public static void main(final String[] args) {
         App app = new App();
