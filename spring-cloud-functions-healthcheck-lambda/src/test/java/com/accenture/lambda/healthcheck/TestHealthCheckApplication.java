@@ -1,14 +1,14 @@
-package com.accenture.lambda;
+package com.accenture.lambda.healthcheck;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;
 
 @TestConfiguration(proxyBeanMethods = false)
-public class TestSpringCloudFunctionsDemoApplication {
+public class TestHealthCheckApplication {
 
     public static void main(String[] args) {
-        SpringApplication.from(SpringCloudFunctionsDemoApplication::main)
-                .with(TestSpringCloudFunctionsDemoApplication.class)
+        SpringApplication.from(HealthCheckApplication::main)
+                .with(TestHealthCheckApplication.class)
                 .run(args);
     }
 }

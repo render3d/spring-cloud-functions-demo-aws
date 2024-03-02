@@ -32,12 +32,12 @@ public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
 
         final Function healthcheck = new Function(
                 this,
-                "spring-cloud-functions-demo-lambda",
+                "spring-cloud-functions-heathcheck-lambda",
                 FunctionProps.builder()
                         .runtime(Runtime.JAVA_17)
                         .code(
                                 Code.fromAsset(
-                                        "../spring-cloud-functions-demo-lambda/target/spring-cloud-functions-demo-lambda-1.0-SNAPSHOT-aws.jar"))
+                                        "../spring-cloud-functions-healthcheck-lambda/target/spring-cloud-functions-healthcheck-lambda-1.0-SNAPSHOT-aws.jar"))
                         .handler("org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest")
                         .memorySize(1024)
                         .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)

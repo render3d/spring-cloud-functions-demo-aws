@@ -1,4 +1,4 @@
-package com.accenture.lambda.rest.dto.responses;
+package com.accenture.lambda.healthcheck.rest.dto.responses;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

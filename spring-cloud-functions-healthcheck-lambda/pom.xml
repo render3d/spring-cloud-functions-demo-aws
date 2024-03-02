@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>spring-cloud-functions-demo-lambda</artifactId>
+  <artifactId>spring-cloud-functions-healthcheck-lambda</artifactId>
   <name>AWS Lambda Module</name>
   <description>Module for AWS Lambda runtime code</description>
 

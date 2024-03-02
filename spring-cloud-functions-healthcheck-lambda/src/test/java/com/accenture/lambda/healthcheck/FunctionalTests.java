@@ -1,8 +1,8 @@
-package com.accenture.lambda;
+package com.accenture.lambda.healthcheck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.accenture.lambda.rest.dto.responses.HealthCheckResponse;
+import com.accenture.lambda.healthcheck.rest.dto.responses.HealthCheckResponse;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
