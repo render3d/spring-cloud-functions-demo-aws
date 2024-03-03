@@ -1,11 +1,9 @@
 package com.accenture.cdk;
 
+import com.accenture.cdk.resource.SnapStartLambda;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.CfnOutputProps;
-import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.aws_apigatewayv2_integrations.HttpLambdaIntegration;
@@ -15,15 +13,7 @@ import software.amazon.awscdk.services.apigatewayv2.HttpApi;
 import software.amazon.awscdk.services.apigatewayv2.HttpApiProps;
 import software.amazon.awscdk.services.apigatewayv2.HttpMethod;
 import software.amazon.awscdk.services.apigatewayv2.PayloadFormatVersion;
-import software.amazon.awscdk.services.codedeploy.LambdaDeploymentConfig;
-import software.amazon.awscdk.services.codedeploy.LambdaDeploymentGroup;
-import software.amazon.awscdk.services.lambda.Alias;
-import software.amazon.awscdk.services.lambda.Architecture;
-import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
-import software.amazon.awscdk.services.lambda.FunctionProps;
-import software.amazon.awscdk.services.lambda.Runtime;
-import software.amazon.awscdk.services.lambda.SnapStartConf;
 import software.constructs.Construct;
 
 public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
@@ -35,27 +25,10 @@ public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
         super(scope, id, props);
 
         // Healthcheck Lambda
-        final Function healthcheck = new Function(
-                this,
-                "spring-cloud-functions-heathcheck-lambda",
-                FunctionProps.builder()
-                        .functionName("spring-cloud-functions-heathcheck-lambda")
-                        .runtime(Runtime.JAVA_17)
-                        .architecture(Architecture.X86_64) // SnapStart is currently not supported on Arm_64
-                        .code(
-                                Code.fromAsset(
-                                        "../spring-cloud-functions-healthcheck-lambda/target/spring-cloud-functions-healthcheck-lambda-1.0-SNAPSHOT-aws.jar"))
-                        .handler("org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest")
-                        .memorySize(1024)
-                        .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
-                        .timeout(Duration.seconds(10))
-                        .environment(Map.of("FUNCTION_NAME", "healthcheck"))
-                        .build());
-
-        // used to make sure each CDK synthesis produces a different Version (versioning required for SnapStart)
-        Alias alias = Alias.Builder.create(this, "LambdaAlias")
-                .aliasName("Demo")
-                .version(healthcheck.getCurrentVersion())
+        final Function healthcheckLambda = new SnapStartLambda.Builder()
+                .withStack(this)
+                .withModuleName("spring-cloud-functions-healthcheck-lambda")
+                .withFunctionName("healthcheck")
                 .build();
 
         LambdaDeploymentGroup.Builder.create(this, "DeploymentGroup")
@@ -76,7 +49,7 @@ public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
                 .methods(Collections.singletonList(HttpMethod.GET))
                 .integration(new HttpLambdaIntegration(
                         "healthcheck",
-                        healthcheck,
+                        healthcheckLambda,
                         HttpLambdaIntegrationProps.builder()
                                 .payloadFormatVersion(PayloadFormatVersion.VERSION_2_0)
                                 .build()))
