@@ -1,4 +1,4 @@
-package com.accenture.lambda.healthcheck;
+package com.accenture.lambda;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;

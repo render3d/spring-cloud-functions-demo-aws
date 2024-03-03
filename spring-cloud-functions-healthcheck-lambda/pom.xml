@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>spring-cloud-functions-healthcheck-lambda</artifactId>
-  <name>AWS Lambda Module</name>
+  <name>Healthcheck Lambda Module</name>
   <description>Module for AWS Lambda runtime code</description>
 
   <properties>

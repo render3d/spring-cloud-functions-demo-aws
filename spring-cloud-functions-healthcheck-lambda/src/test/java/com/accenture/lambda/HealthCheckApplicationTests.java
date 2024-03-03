@@ -1,4 +1,4 @@
-package com.accenture.lambda.healthcheck;
+package com.accenture.lambda;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
