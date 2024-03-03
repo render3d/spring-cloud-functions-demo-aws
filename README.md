@@ -25,9 +25,8 @@ To that end, this project organises Java code into the following modules:
 Execute the following terminal commands, in order and from the repository root, to deploy the functions to AWS:
 
 ```bash
-cd spring-cloud-functions-demo-lambda
-mvn clean package
-cd ../spring-cloud-functions-demo-infrastructure
+sh package-modules.sh
+cd spring-cloud-functions-demo-infrastructure/
 cdk synth
 cdk deploy
 ```
