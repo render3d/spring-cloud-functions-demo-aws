@@ -31,9 +31,11 @@ public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
                 .withFunctionName("healthcheck")
                 .build();
 
-        LambdaDeploymentGroup.Builder.create(this, "DeploymentGroup")
-                .alias(alias)
-                .deploymentConfig(LambdaDeploymentConfig.LINEAR_10_PERCENT_EVERY_1_MINUTE)
+        // Address Search Lambda
+        final Function findAddressesLambda = new SnapStartLambda.Builder()
+                .withStack(this)
+                .withModuleName("spring-cloud-functions-geocode-lambda")
+                .withFunctionName("findAddresses")
                 .build();
 
         // API Gateway
@@ -50,6 +52,17 @@ public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
                 .integration(new HttpLambdaIntegration(
                         "healthcheck",
                         healthcheckLambda,
+                        HttpLambdaIntegrationProps.builder()
+                                .payloadFormatVersion(PayloadFormatVersion.VERSION_2_0)
+                                .build()))
+                .build());
+
+        httpApi.addRoutes(AddRoutesOptions.builder()
+                .path("/findAddresses")
+                .methods(Collections.singletonList(HttpMethod.POST))
+                .integration(new HttpLambdaIntegration(
+                        "findAddresses",
+                        findAddressesLambda,
                         HttpLambdaIntegrationProps.builder()
                                 .payloadFormatVersion(PayloadFormatVersion.VERSION_2_0)
                                 .build()))
