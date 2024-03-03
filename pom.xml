@@ -16,6 +16,7 @@
     <module>spring-cloud-functions-demo-infrastructure</module>
     <module>spring-cloud-functions-healthcheck-lambda</module>
     <module>spring-cloud-functions-geocode-lambda</module>
+    <module>spring-cloud-functions-eventbridge-lambda</module>
   </modules>
 
   <parent>
