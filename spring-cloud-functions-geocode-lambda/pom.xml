@@ -13,7 +13,7 @@
   <artifactId>spring-cloud-functions-geocode-lambda</artifactId>
 
   <name>Geocode Address Lambda Module</name>
-  <description>Module for AWS Lambda runtime code</description>
+  <description>Example Spring Cloud Function for REST APIs triggered by HTTP POST requests</description>
 
   <properties>
     <java.version>17</java.version>
