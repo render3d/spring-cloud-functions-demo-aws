@@ -1,5 +1,6 @@
 package com.accenture.cdk.resource;
 
+import java.util.HashMap;
 import java.util.Map;
 import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;
@@ -16,7 +17,7 @@ import software.constructs.Construct;
 
 public class SnapStartLambda extends Function {
 
-    public SnapStartLambda(final Construct scope, final String id, final FunctionProps props) {
+    private SnapStartLambda(final Construct scope, final String id, final FunctionProps props) {
         super(scope, id, props);
     }
 
@@ -25,6 +26,7 @@ public class SnapStartLambda extends Function {
         private Stack stack;
         private String functionName;
         private String moduleName;
+        private Map<String, String> envVars;
 
         public Builder withStack(final Stack stack) {
             this.stack = stack;
@@ -33,11 +35,31 @@ public class SnapStartLambda extends Function {
 
         public Builder withFunctionName(final String functionName) {
             this.functionName = functionName;
+            if (this.envVars == null) {
+                this.envVars = new HashMap<>();
+            }
+            this.envVars.put("FUNCTION_NAME", functionName);
             return this;
         }
 
         public Builder withModuleName(final String moduleName) {
             this.moduleName = moduleName;
+            return this;
+        }
+
+        public Builder withEnvironmentVariables(final Map<String, String> envVarsMap) {
+            if (this.envVars == null) {
+                this.envVars = new HashMap<>();
+            }
+            this.envVars.putAll(envVarsMap);
+            return this;
+        }
+
+        public Builder withEnvironmentVariable(final String key, final String value) {
+            if (this.envVars == null) {
+                this.envVars = new HashMap<>();
+            }
+            this.envVars.put(key, value);
             return this;
         }
 
@@ -48,13 +70,13 @@ public class SnapStartLambda extends Function {
             final FunctionProps props = FunctionProps.builder()
                     .functionName(this.moduleName)
                     .runtime(Runtime.JAVA_17)
-                    .architecture(Architecture.X86_64) // SnapStart is currently not supported on Arm_64
+                    .architecture(Architecture.X86_64) // SnapStart is not currently supported on Arm_64
                     .code(Code.fromAsset(assetPath))
                     .handler("org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest")
                     .memorySize(1024)
                     .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
                     .timeout(Duration.seconds(10))
-                    .environment(Map.of("FUNCTION_NAME", functionName))
+                    .environment(this.envVars)
                     .build();
 
             final Function function = new SnapStartLambda(this.stack, this.functionName, props);

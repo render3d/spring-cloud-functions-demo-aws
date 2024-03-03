@@ -77,6 +77,9 @@ public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
                 .withStack(this)
                 .withModuleName("spring-cloud-functions-eventbridge-lambda")
                 .withFunctionName("EventBridgeFunction")
+                .withEnvironmentVariable("API_ROOT_URL", httpApi.getApiEndpoint())
+                .withEnvironmentVariable("HEALTHCHECK_PATH", healthcheckPath)
+                .withEnvironmentVariable("GEOCODE_PATH", geocodePath)
                 .build();
 
         Rule.Builder.create(this, "TimerRule")
