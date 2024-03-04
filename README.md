@@ -34,6 +34,9 @@ cdk deploy
 
 ## References
 
-- [Spring Cloud Function Docs](https://docs.spring.io/spring-cloud-function/docs/current/reference/html/spring-cloud-function.html)
-- [Spring Cloud Function with SnapStart YouTube Tutorial](https://www.youtube.com/embed/isS6m6aj_Ak?si=2vo4k1SZIyLX-I4B)
-- [Activating and managing Lambda SnapStart](https://docs.aws.amazon.com/lambda/latest/dg/snapstart-activate.html)
+- Spring Cloud Functions:
+  - [Reference Documentation](https://docs.spring.io/spring-cloud-function/reference/index.html)
+  - [Samples](https://github.com/spring-cloud/spring-cloud-function/tree/main/spring-cloud-function-samples)
+- _SnapStart_ for AWS Lambda
+  - [Spring Cloud Function with SnapStart YouTube Tutorial](https://www.youtube.com/embed/isS6m6aj_Ak?si=2vo4k1SZIyLX-I4B)
+  - [Activating and managing Lambda SnapStart](https://docs.aws.amazon.com/lambda/latest/dg/snapstart-activate.html)
