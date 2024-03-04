@@ -75,7 +75,7 @@ public class SnapStartLambda extends Function {
                     .handler("org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest")
                     .memorySize(1024)
                     .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
-                    .timeout(Duration.seconds(10))
+                    .timeout(Duration.seconds(15))
                     .environment(this.envVars)
                     .build();
 
