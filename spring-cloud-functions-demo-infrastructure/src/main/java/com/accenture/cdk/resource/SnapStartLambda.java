@@ -73,7 +73,7 @@ public class SnapStartLambda extends Function {
                     .architecture(Architecture.X86_64) // SnapStart is not currently supported on Arm_64
                     .code(Code.fromAsset(assetPath))
                     .handler("org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest")
-                    .memorySize(512)
+                    .memorySize(1024)
                     .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
                     .timeout(Duration.seconds(15))
                     .environment(this.envVars)
