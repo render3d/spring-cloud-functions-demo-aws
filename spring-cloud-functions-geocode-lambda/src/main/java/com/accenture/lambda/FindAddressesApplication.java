@@ -7,10 +7,13 @@ import com.accenture.lambda.service.FindAddressService;
 import com.accenture.lambda.service.models.FindAddressCandidatesResponse;
 import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * @author vincent.renders@accenture.com
+ * @since 02/03/2024
+ */
 @Slf4j
 @SpringBootApplication
 public class FindAddressesApplication {
@@ -33,6 +36,7 @@ public class FindAddressesApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(FindAddressesApplication.class, args);
+        // empty unless running locally or using Custom runtime at which point it should include
+        // SpringApplication.run(FindAddressesApplication.class, args);
     }
 }
