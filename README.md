@@ -21,6 +21,12 @@ To that end, this project organises Java code into the following modules:
 3. [Geocode Lambda Module](spring-cloud-functions-geocode-lambda/README.md) - source code for the lambda mapped to the `POST /findAddresses` endpoint
 4. [EventBridge Lambda Module](spring-cloud-functions-eventbridge-lambda/README.md) - source code for the integrated with AWS EventBridge
 
+## Prerequisites
+
+### AWS
+
+- [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)
+
 ## Deployment
 
 Execute the following terminal commands, in order and from the repository root, to deploy the functions to AWS:
