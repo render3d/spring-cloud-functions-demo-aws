@@ -27,11 +27,151 @@
   </parent>
 
   <properties>
-    <palantir.version>2.28.0</palantir.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>17</java.version>
+
     <spotless-maven-plugin.version>2.40.0</spotless-maven-plugin.version>
+    <palantir.version>2.28.0</palantir.version>
+
+    <spring-boot.version>3.2.1</spring-boot.version>
+    <spring-cloud.version>4.1.0</spring-cloud.version>
+    <spring-doc.version>2.3.0</spring-doc.version>
+    <lombok.version>1.18.30</lombok.version>
+
+    <aws-lambda-java-core.vesion>1.2.3</aws-lambda-java-core.vesion>
+    <aws-lambda-java-events.version>3.11.4</aws-lambda-java-events.version>
+
+    <cdk.version>2.132.1</cdk.version>
+    <constructs.version>[10.0.0,11.0.0)</constructs.version>
+
+    <junit-jupiter.version>5.10.1</junit-jupiter.version>
+    <testcontainers.version>1.19.3</testcontainers.version>
+
+    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
+    <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
+
+    <spring-boot-thin-layout.version>1.0.31.RELEASE</spring-boot-thin-layout.version>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <!-- Spring Boot -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+
+      <!-- Spring Cloud -->
+      <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        <version>${spring-doc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-function-web</artifactId>
+        <version>${spring-cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-function-adapter-aws</artifactId>
+        <version>${spring-cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-function-web</artifactId>
+        <version>${spring-cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+        <optional>true</optional>
+      </dependency>
+
+      <!-- AWS Dependencies -->
+      <dependency>
+        <groupId>com.amazonaws</groupId>
+        <artifactId>aws-lambda-java-core</artifactId>
+        <version>${aws-lambda-java-core.vesion}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.amazonaws</groupId>
+        <artifactId>aws-lambda-java-events</artifactId>
+        <version>${aws-lambda-java-events.version}</version>
+      </dependency>
+
+      <!-- CDK Dependencies -->
+      <dependency>
+        <groupId>software.amazon.awscdk</groupId>
+        <artifactId>aws-cdk-lib</artifactId>
+        <version>${cdk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>software.constructs</groupId>
+        <artifactId>constructs</artifactId>
+        <version>${constructs.version}</version>
+      </dependency>
+
+      <!-- Test Dependencies -->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>${junit-jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <version>${spring-boot.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-testcontainers</artifactId>
+        <version>${spring-boot.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>${testcontainers.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>${exec-maven-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+        </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>${maven-shade-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
     <plugins>
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
