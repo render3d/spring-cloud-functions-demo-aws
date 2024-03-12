@@ -1,6 +1,7 @@
 package com.accenture.lambda.functions;
 
 import com.accenture.lambda.util.HttpUtil;
+import com.accenture.lambda.exception.RequestPayloadProcessingException;
 import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +24,9 @@ public class EventBridgeFunction implements Consumer<ScheduledEvent> {
         try {
             client.sendHttpPost(System.getenv("GEOCODE_PATH"), new ObjectMapper().writeValueAsString(payload));
         } catch (JsonProcessingException e) {
-            log.error("Function call encountered an error:", e);
+            final String message = String.format("Error serialising request payload: %s", e.getMessage());
+            log.error(message, e);
+            throw new RequestPayloadProcessingException(message, e);
         }
 
         log.info("Function call ends");

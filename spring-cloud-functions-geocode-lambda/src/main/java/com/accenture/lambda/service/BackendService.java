@@ -29,8 +29,9 @@ public class BackendService {
         try {
             log.info("Payload: {}", mapper.writeValueAsString(findAddressesPayload));
         } catch (JsonProcessingException e) {
-            log.error("Error serialising payload:", e);
-            throw new RequestProcessingException(e.getMessage());
+            final String message = String.format("Error serialising payload: %s", e.getMessage());
+            log.error(message, e);
+            throw new RequestProcessingException(message, e);
         }
 
         final String queryString = String.format(
@@ -47,8 +48,10 @@ public class BackendService {
             log.info("Response: {}", mapper.writeValueAsString(response.body()));
             return mapper.readValue(response.body(), FindAddressCandidatesResponse.class);
         } catch (JsonProcessingException e) {
-            log.error("Error deserialising GET /findAddressCandidates response:", e);
-            throw new BackendResponseException(e.getMessage());
+            final String message =
+                    String.format("Error deserialising GET /findAddressCandidates response: %s", e.getMessage());
+            log.error(message, e);
+            throw new BackendResponseException(message, e);
         }
     }
 
