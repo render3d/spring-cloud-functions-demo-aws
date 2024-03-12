@@ -1,6 +1,6 @@
 package com.accenture.lambda.functions;
 
-import com.accenture.lambda.util.HttpUtil;
+import com.accenture.lambda.clients.HttpClient;
 import com.accenture.lambda.exception.RequestPayloadProcessingException;
 import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,7 +17,7 @@ public class EventBridgeFunction implements Consumer<ScheduledEvent> {
     public void accept(final ScheduledEvent event) {
         log.info("Function triggered with: {}", event);
 
-        final HttpUtil client = new HttpUtil();
+        final HttpClient client = new HttpClient();
         client.sendHttpGet(System.getenv("HEALTHCHECK_PATH"));
 
         final Payload payload = new Payload("30 Fenchurch Street, London, EC3M 3BD", 100, true);

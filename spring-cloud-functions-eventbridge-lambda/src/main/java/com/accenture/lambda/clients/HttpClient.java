@@ -1,23 +1,22 @@
-package com.accenture.lambda.util;
+package com.accenture.lambda.clients;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import lombok.SneakyThrows;
 
-public class HttpUtil {
+public class HttpClient {
 
-    private final HttpClient httpClient;
+    private final java.net.http.HttpClient client;
     private final HttpRequest.Builder httpBuilder;
     private final String apiRootUrl;
 
-    public HttpUtil() {
+    public HttpClient() {
         this.httpBuilder = HttpRequest.newBuilder().timeout(Duration.of(30, SECONDS));
-        this.httpClient = HttpClient.newHttpClient();
+        this.client = java.net.http.HttpClient.newHttpClient();
         this.apiRootUrl = System.getenv("API_ROOT_URL");
     }
 
@@ -28,7 +27,7 @@ public class HttpUtil {
                 .GET()
                 .build();
 
-        return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
     @SneakyThrows
@@ -39,6 +38,6 @@ public class HttpUtil {
                 .POST(HttpRequest.BodyPublishers.ofString(payload))
                 .build();
 
-        return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 }
