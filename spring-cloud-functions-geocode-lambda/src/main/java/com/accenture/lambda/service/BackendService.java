@@ -54,7 +54,7 @@ public class BackendService {
     }
 
     @SneakyThrows
-    private static HttpResponse<String> sendHttpGet(final String uri) {
+    private HttpResponse<String> sendHttpGet(final String uri) {
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uri))
                 .timeout(Duration.of(30, SECONDS))
@@ -64,7 +64,7 @@ public class BackendService {
         return HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    private static String encodeValue(String value) {
+    private String encodeValue(String value) {
         return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 }
