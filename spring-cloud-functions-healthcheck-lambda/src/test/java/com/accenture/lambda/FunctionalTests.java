@@ -26,8 +26,8 @@ class FunctionalTests {
         // assert
         assertThat(result.getMessage()).isEqualTo("Serverless API is up and running");
         assertThat(result.getVersion()).isEqualTo("1.0-SNAPSHOT");
-        assertThat(result.getServertime()).isNotNull();
-        assertThat(result.getServertime()).isNotBlank();
-        assertThat(result.getServertime()).isNotEmpty();
+        assertThat(result.getServerTime()).isNotNull();
+        assertThat(result.getServerTime()).isNotBlank();
+        assertThat(result.getServerTime()).isNotEmpty();
     }
 }
