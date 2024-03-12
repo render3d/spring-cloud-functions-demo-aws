@@ -5,9 +5,7 @@ import com.accenture.lambda.rest.dto.response.common.AddressResult;
 import com.accenture.lambda.service.models.FindAddressCandidatesResponse;
 import java.util.List;
 import java.util.Objects;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 public class FindAddressService {
     public static final String LOC_NAME_WORLD = "World";
 

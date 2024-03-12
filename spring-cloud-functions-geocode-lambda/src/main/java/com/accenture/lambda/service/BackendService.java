@@ -15,12 +15,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@NoArgsConstructor
 public class BackendService {
     private static final String ESRI_URI = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
     private static final ObjectMapper mapper = new ObjectMapper();
