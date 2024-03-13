@@ -3,7 +3,6 @@ package com.accenture.lambda.service;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 import com.accenture.lambda.exception.BackendResponseException;
-import com.accenture.lambda.exception.RequestProcessingException;
 import com.accenture.lambda.rest.request.FindAddressesPayload;
 import com.accenture.lambda.service.models.FindAddressCandidatesResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,9 +26,8 @@ public class BackendService {
         try {
             log.info("Payload: {}", mapper.writeValueAsString(findAddressesPayload));
         } catch (JsonProcessingException e) {
-            final String message = String.format("Error serialising payload: %s", e.getMessage());
-            log.error(message, e);
-            throw new RequestProcessingException(message, e);
+            // swallowing benign exception thrown by log message
+            log.error(String.format("Error serialising payload: %s", e.getMessage()), e);
         }
 
         final String queryString = String.format(
