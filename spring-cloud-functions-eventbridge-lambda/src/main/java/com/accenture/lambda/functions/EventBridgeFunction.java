@@ -1,7 +1,7 @@
 package com.accenture.lambda.functions;
 
 import com.accenture.lambda.clients.HttpClient;
-import com.accenture.lambda.exception.RequestPayloadProcessingException;
+import com.accenture.lambda.exception.RequestProcessingException;
 import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +26,7 @@ public class EventBridgeFunction implements Consumer<ScheduledEvent> {
         } catch (JsonProcessingException e) {
             final String message = String.format("Error serialising request payload: %s", e.getMessage());
             log.error(message, e);
-            throw new RequestPayloadProcessingException(message, e);
+            throw new RequestProcessingException(message, e);
         }
 
         log.info("Function call ends");
