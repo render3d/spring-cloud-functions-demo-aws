@@ -22,12 +22,15 @@ public class SnapStartLambda {
 
         private Factory() {}
 
-        public static Function createFunction(Stack stack, String functionName, String moduleName) {
+        public static Function createFunction(final Stack stack, final String functionName, final String moduleName) {
             return createFunction(stack, functionName, moduleName, new HashMap<>());
         }
 
         public static Function createFunction(
-                Stack stack, String functionName, String moduleName, Map<String, String> envVars) {
+                final Stack stack,
+                final String functionName,
+                final String moduleName,
+                final Map<String, String> envVars) {
             final String assetPath = String.format("../%s/target/%s-1.0-SNAPSHOT-aws.jar", moduleName, moduleName);
 
             final FunctionProps props = FunctionProps.builder()

@@ -15,8 +15,8 @@ public class EventBridgeTimerRule {
 
         private Factory() {}
 
-        public static Rule createTimedEvent(final Stack stack, final Function eventBridgeLambda) {
-            return Rule.Builder.create(stack, "TimerRule")
+        public static void createTimedEvent(final Stack stack, final Function eventBridgeLambda) {
+            Rule.Builder.create(stack, "TimerRule")
                     .ruleName("EventBridgeTimerTrigger")
                     .description("Scheduled event to trigger lambda")
                     /*

@@ -20,8 +20,8 @@ public class DemoApiGateway {
         private Factory() {}
 
         public static HttpApi createDemoApiGateway(
-                Stack stack, Function healthcheckLambda, Function findAddressesLambda) {
-            HttpApi httpApi = new HttpApi(
+                final Stack stack, final Function healthcheckLambda, final Function findAddressesLambda) {
+            final HttpApi httpApi = new HttpApi(
                     stack,
                     "demo-api",
                     HttpApiProps.builder()
