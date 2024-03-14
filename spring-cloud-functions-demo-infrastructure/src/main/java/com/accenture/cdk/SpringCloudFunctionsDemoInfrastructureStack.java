@@ -1,8 +1,8 @@
 package com.accenture.cdk;
 
-import com.accenture.cdk.resource.DemoApiGateway;
-import com.accenture.cdk.resource.EventBridgeTimerRule;
-import com.accenture.cdk.resource.SnapStartLambda;
+import com.accenture.cdk.resource.DemoApiGatewayFactory;
+import com.accenture.cdk.resource.EventBridgeRuleFactory;
+import com.accenture.cdk.resource.SnapStartLambdaFactory;
 import java.util.HashMap;
 import java.util.Map;
 import software.amazon.awscdk.CfnOutput;
@@ -19,16 +19,16 @@ public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
         super(scope, id, props);
 
         // Healthcheck Lambda
-        final Function healthcheckLambda = SnapStartLambda.Factory.createFunction(
-                this, "healthcheck", "spring-cloud-functions-healthcheck-lambda");
+        final Function healthcheckLambda =
+                SnapStartLambdaFactory.createFunction(this, "healthcheck", "spring-cloud-functions-healthcheck-lambda");
 
         // Address Search Lambda
         final Function findAddressesLambda =
-                SnapStartLambda.Factory.createFunction(this, "findAddresses", "spring-cloud-functions-geocode-lambda");
+                SnapStartLambdaFactory.createFunction(this, "findAddresses", "spring-cloud-functions-geocode-lambda");
 
         // API Gateway
         final HttpApi httpApi =
-                DemoApiGateway.Factory.createDemoApiGateway(this, healthcheckLambda, findAddressesLambda);
+                DemoApiGatewayFactory.createDemoApiGateway(this, healthcheckLambda, findAddressesLambda);
 
         // EventBridge-triggered Lambda
         Map<String, String> envVars = new HashMap<>();
@@ -36,10 +36,10 @@ public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
         envVars.put("HEALTHCHECK_PATH", String.format("/%s", healthcheckLambda.getFunctionName()));
         envVars.put("GEOCODE_PATH", String.format("/%s", findAddressesLambda.getFunctionName()));
 
-        final Function eventBridgeLambda = SnapStartLambda.Factory.createFunction(
+        final Function eventBridgeLambda = SnapStartLambdaFactory.createFunction(
                 this, "EventBridgeFunction", "spring-cloud-functions-eventbridge-lambda", envVars);
 
-        EventBridgeTimerRule.Factory.createTimedEvent(this, eventBridgeLambda);
+        EventBridgeRuleFactory.createTimedEvent(this, eventBridgeLambda);
 
         // Outputs
         new CfnOutput(
