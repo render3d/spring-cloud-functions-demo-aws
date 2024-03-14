@@ -2,6 +2,8 @@ package com.accenture.cdk;
 
 import com.accenture.cdk.resource.SnapStartLambda;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.CfnOutputProps;
 import software.amazon.awscdk.Stack;
@@ -26,19 +28,13 @@ public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
 
         // Healthcheck Lambda
         final String healthcheckFunctionName = "healthcheck";
-        final Function healthcheckLambda = new SnapStartLambda.Builder()
-                .withStack(this)
-                .withModuleName("spring-cloud-functions-healthcheck-lambda")
-                .withFunctionName(healthcheckFunctionName)
-                .build();
+        final Function healthcheckLambda = SnapStartLambda.Factory.createFunction(
+                this, "spring-cloud-functions-healthcheck-lambda", healthcheckFunctionName);
 
         // Address Search Lambda
         final String geocodeFunctionName = "findAddresses";
-        final Function findAddressesLambda = new SnapStartLambda.Builder()
-                .withStack(this)
-                .withModuleName("spring-cloud-functions-geocode-lambda")
-                .withFunctionName(geocodeFunctionName)
-                .build();
+        final Function findAddressesLambda = SnapStartLambda.Factory.createFunction(
+                this, "spring-cloud-functions-geocode-lambda", geocodeFunctionName);
 
         // API Gateway
         HttpApi httpApi = new HttpApi(
@@ -73,14 +69,13 @@ public class SpringCloudFunctionsDemoInfrastructureStack extends Stack {
                 .build());
 
         // EventBridge-triggered Lambda
-        final Function eventBridgeLambda = new SnapStartLambda.Builder()
-                .withStack(this)
-                .withModuleName("spring-cloud-functions-eventbridge-lambda")
-                .withFunctionName("EventBridgeFunction")
-                .withEnvironmentVariable("API_ROOT_URL", httpApi.getApiEndpoint())
-                .withEnvironmentVariable("HEALTHCHECK_PATH", healthcheckPath)
-                .withEnvironmentVariable("GEOCODE_PATH", geocodePath)
-                .build();
+        Map<String, String> envVars = new HashMap<>();
+        envVars.put("API_ROOT_URL", httpApi.getApiEndpoint());
+        envVars.put("HEALTHCHECK_PATH", healthcheckPath);
+        envVars.put("GEOCODE_PATH", geocodePath);
+
+        final Function eventBridgeLambda = SnapStartLambda.Factory.createFunction(
+                this, "EventBridgeFunction", "spring-cloud-functions-eventbridge-lambda", envVars);
 
         Rule.Builder.create(this, "TimerRule")
                 .ruleName("EventBridgeTimerTrigger")
