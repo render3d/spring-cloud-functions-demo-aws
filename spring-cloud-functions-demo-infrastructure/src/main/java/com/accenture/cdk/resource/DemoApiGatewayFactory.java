@@ -24,26 +24,22 @@ public class DemoApiGatewayFactory {
                         .apiName("spring-cloud-function-serverless-api")
                         .build());
 
-        final String healthcheckFunctionName = healthcheckLambda.getFunctionName();
-        final String healthcheckPath = String.format("/%s", healthcheckFunctionName);
         httpApi.addRoutes(AddRoutesOptions.builder()
-                .path(healthcheckPath)
+                .path("/healthcheck")
                 .methods(Collections.singletonList(HttpMethod.GET))
                 .integration(new HttpLambdaIntegration(
-                        healthcheckFunctionName,
+                        "healthcheckFunction",
                         healthcheckLambda,
                         HttpLambdaIntegrationProps.builder()
                                 .payloadFormatVersion(PayloadFormatVersion.VERSION_2_0)
                                 .build()))
                 .build());
 
-        final String geocodeFunctionName = findAddressesLambda.getFunctionName();
-        final String geocodePath = String.format("/%s", geocodeFunctionName);
         httpApi.addRoutes(AddRoutesOptions.builder()
-                .path(geocodePath)
+                .path("/findAddresses")
                 .methods(Collections.singletonList(HttpMethod.POST))
                 .integration(new HttpLambdaIntegration(
-                        geocodeFunctionName,
+                        "findAddresses",
                         findAddressesLambda,
                         HttpLambdaIntegrationProps.builder()
                                 .payloadFormatVersion(PayloadFormatVersion.VERSION_2_0)
